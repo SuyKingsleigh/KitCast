@@ -10,7 +10,9 @@ Just run the install.sh
 ./kitcast.sh -f video_name.extension 
 
 ## Flags: 
--f --file filemane (the name of the video you want to watch) 
--s --subtitle subtitle.srt 
--d --device chromecast_name (if you have multiple chromecasts then this might be useful) 
+* -f --file filemane (the name of the video you want to watch) 
+
+* -s --subtitle subtitle.srt 
+
+* -d --device chromecast_name (if you have multiple chromecasts then this might be useful) 
 
