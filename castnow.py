@@ -27,9 +27,9 @@ class Castnow:
             command += " --device " + self.device
 
         if self.subtitle:
-            command += " --subtitles " +  " ./" + self.subtitle
+            command += " --subtitles " + self.subtitle
 
-        command += " ./" + self.file_name
+        command += " " + self.file_name
 
         print("\n\n comando a ser executado " + command)
         return command
