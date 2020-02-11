@@ -27,7 +27,7 @@ class Castnow:
             command += " --device " + self.device
 
         if self.subtitle:
-            command += " --subtitles " + self.subtitle + " ./" + self.subtitle
+            command += " --subtitles " +  " ./" + self.subtitle
 
         command += " ./" + self.file_name
 
