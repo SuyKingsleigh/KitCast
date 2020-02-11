@@ -4,21 +4,21 @@ import os
 class Castnow:
     # filename = video
     # device = chromecast
-    # sub = subtitle file
-    def __init__(self, filename, device=None, sub=None):
+    # subtitle = subtitle file
+    def __init__(self, filename, results):
         self.file_name = filename
 
         # chromecast name
-        if device:
-            self.device = device
+        if results.device:
+            self.device = results.device
         else:
             self.device = False
 
         # subtitle file name
-        if sub:
-            self.sub = sub
+        if results.subtitle:
+            self.subtitle = results.subtitle
         else:
-            self.sub = False
+            self.subtitle = False
 
     # command to run
     def _commands(self):
@@ -26,10 +26,12 @@ class Castnow:
         if self.device:
             command += " --device " + self.device
 
-        if self.sub:
-            command += " --subtitles " + self.sub + " ./" + self.sub
+        if self.subtitle:
+            command += " --subtitles " + self.subtitle + " ./" + self.subtitle
 
         command += " ./" + self.file_name
+
+        print("\n\n comando a ser executado " + command)
         return command
 
     def cast(self):

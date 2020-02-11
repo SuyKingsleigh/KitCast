@@ -1,47 +1,47 @@
-import subprocess, sys, os, glob
+import argparse
+import os
+import sys
+
+from castnow import Castnow
 
 
-# Tenta converter um arquivo para o formato suportado pelo chromecast
-# Caso consiga, retornara true
-def convert_to_cast(video_name):
-    try:
-        print("./chromecastize.sh " + video_name)
-        # subprocess.call("./chromecastize.sh " + video_name)
-        os.system("./chromecastize.sh " + video_name)
-        return True
-    except Exception as e:
-        print(e.with_traceback())
-        return False
+class Kitcast:
+    """
+    Keys:
+    -file video
+    -subtitle subtitle.srt
+    -device chromecast_name
+    """
+    def __init__(self, args):
 
-# verifica no diretorio atual se ha legendas para aquele video
-def search_subtitles():
-    sub = glob.glob('./*.srt')
-    if sub:
-        return sub[0]
-    else:
-        return False
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-f", '--file', action='store', dest='filename')
+        parser.add_argument('-s', '--subtitle', action='store', dest='subtitle')
+        parser.add_argument('-d', '--device', action='store', dest='device')
 
-# executa o video
-def run_cast_now(video_name):
-    sub = search_subtitles()
-    try:
-        if sub:
-            print("Possui legenda")
-            os.system('castnow --subtitle ./' + sub + " ./" + video_name)
-        else:
-            print("Nao possui legenda")
-            os.system('castnow ./' + video_name)
-    except Exception as e:
-        print(e.with_traceback())
+        self.results = parser.parse_args()
+        self.file = self.results.filename
+        print(self.file + "\n\n")
+
+
+    def _convert_to_cast(self):
+        try:
+            if not self.file:
+                print("no filename specified, use -f video_name.extension")
+                return -1
+            else:
+                os.system("./chromecastize.sh " + self.file)
+                return 1
+        except Exception as e:
+            print(e.with_traceback())
+            return 2
+
+    def run(self):
+        print("Converting file to chromecast format like ")
+        if self._convert_to_cast() > 0:
+            print("Successfully converted")
+            Castnow(filename=self.file, results=self.results).cast()
 
 
 if __name__ == '__main__':
-    # for arg in sys.argv: print(arg)
-    video_name = sys.argv[1]
-    if video_name:
-        print("Convertendo o arquivo")
-        if convert_to_cast(video_name):
-            print('convertido com sucesso')
-            run_cast_now(video_name)
-        else:
-            print("falhou ao converter o video")
+    Kitcast(sys.argv).run()
