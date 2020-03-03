@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-app="/usr/local/bin/KitCast"
+app="~/.KitCast/app.py"
 #app="coiso.py"
 if [ $# -lt 3 ];
     then
