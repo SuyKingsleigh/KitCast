@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 import argparse
 import os
+import pathlib
 import sys
 
 from castnow import Castnow
 
-#todo NameParser
+from NameParser import NameParser
+
+
 class Kitcast:
     """
     Keys:
@@ -13,19 +16,28 @@ class Kitcast:
     -subtitle subtitle.srt
     -device chromecast_name
     """
+
     def __init__(self, args):
 
-        parser = argparse.ArgumentParser()
-        parser.add_argument("-f", '--file', action='store', dest='filename')
+        parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+        parser.add_argument("-f", '--file', action='store', dest='filename', nargs='*')
         parser.add_argument('-s', '--subtitle', action='store', dest='subtitle')
         parser.add_argument('-d', '--device', action='store', dest='device')
 
         self.results = parser.parse_args()
         self.file = self.results.filename
-        print(self.file + "\n\n")
-
+        # print(self.file + "\n\n")
 
     def _convert_to_cast(self):
+        if len(self.file) > 1:
+            pass
+            try:
+                self.file = NameParser(self.file).rename()
+            except:
+                print('Failed to rename file')
+                print("The name should not contain special characters, nor spaces")
+        else:
+            self.file = self.file[0]
         try:
             if not self.file:
                 print("no filename specified, use -f video_name.extension")

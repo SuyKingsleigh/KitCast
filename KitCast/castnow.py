@@ -8,13 +8,13 @@ class Castnow:
     def __init__(self, filename, results):
         self.file_name = filename
 
-        # chromecast name
+        # chromecast original_name
         if results.device:
             self.device = results.device
         else:
             self.device = False
 
-        # subtitle file name
+        # subtitle file original_name
         if results.subtitle:
             self.subtitle = results.subtitle
         else:
@@ -31,7 +31,6 @@ class Castnow:
 
         command += " " + self.file_name
 
-        print("\n\n comando a ser executado " + command)
         return command
 
     def cast(self):
