@@ -5,7 +5,7 @@ import sys
 
 from castnow import Castnow
 
-
+#todo NameParser
 class Kitcast:
     """
     Keys:
