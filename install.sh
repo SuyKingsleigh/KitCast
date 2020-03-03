@@ -1,5 +1,7 @@
 #!/bin/bash
 sudo npm install castnow -g
-chmod 755 kitcast.py
+chmod +x kitcast.py
+sudo cp ./kitcast.py /usr/local/bin/kitcast
+echo "succesfully installed"
 
 
