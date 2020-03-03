@@ -1,7 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 import argparse
 import os
 import sys
+sys.path.append(os.getcwd())
 
 from kitcast.src.castnow import Castnow
 
