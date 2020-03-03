@@ -3,7 +3,7 @@ import argparse
 import os
 import sys
 
-from castnow import Castnow
+from kitcast.src.castnow import Castnow
 
 
 class Kitcast:
