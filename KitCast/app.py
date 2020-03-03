@@ -2,9 +2,11 @@
 import argparse
 import os
 import sys
+
+from KitCast.kitcast.src.castnow import Castnow
+
 sys.path.append(os.getcwd())
 
-from KitCast.kitcast import Castnow
 
 
 class Kitcast:

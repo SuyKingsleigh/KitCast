@@ -3,8 +3,8 @@
 app="~/.KitCast/KitCast/app.py"
 if [ $# -lt 3 ];
     then
-        ./$app $1 $2
+        python3 $app $1 $2
     else
-        ./$app $1 $2 $3 $4
+        python3 $app $1 $2 $3 $4
 fi
 
