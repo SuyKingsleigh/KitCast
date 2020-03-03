@@ -3,11 +3,7 @@ import argparse
 import os
 import sys
 
-from KitCast.kitcast.src.castnow import Castnow
-
-sys.path.append(os.getcwd())
-
-
+from KitCast.castnow import Castnow
 
 class Kitcast:
     """
