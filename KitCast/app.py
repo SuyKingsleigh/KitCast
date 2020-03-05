@@ -2,6 +2,7 @@
 import argparse
 import os
 import pathlib
+import shlex
 import sys
 
 from castnow import Castnow
@@ -20,38 +21,35 @@ class Kitcast:
     def __init__(self, args):
 
         parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-        parser.add_argument("-f", '--file', action='store', dest='filename', nargs='*')
-        parser.add_argument('-s', '--subtitle', action='store', dest='subtitle')
-        parser.add_argument('-d', '--device', action='store', dest='device')
+        parser.add_argument("-f", '--file', action='store', dest='filename', nargs='*', required=True, help=
+        "The name of the video you want to cast, must include extension")
+        parser.add_argument('-s', '--subtitle', action='store', dest='subtitle',
+                            help="Subtitle file, must include extension")
+        parser.add_argument('-d', '--device', action='store', dest='device',
+                            help="If you want more than one device you should name the chromecast")
 
         self.results = parser.parse_args()
         self.file = self.results.filename
-        # print(self.file + "\n\n")
 
     def _convert_to_cast(self):
-        if len(self.file) > 1:
-            pass
-            try:
-                self.file = NameParser(self.file).rename()
-            except:
-                print('Failed to rename file')
-                print("The name should not contain special characters, nor spaces")
-        else:
-            self.file = self.file[0]
+        self.file = shlex.join(self.file)
+
+        if len(self.file) > 1: print("The name should not contain spaces nor special characters")
+
         try:
             if not self.file:
                 print("no filename specified, use -f video_name.extension")
-                return -1
+                return False
             else:
                 os.system("~/.KitCast/KitCast/./chromecastize.sh " + self.file)
-                return 1
+                return True
         except Exception as e:
             print(e.with_traceback())
-            return 2
+            return False
 
     def run(self):
         print("Converting file to chromecast format like ")
-        if self._convert_to_cast() > 0:
+        if self._convert_to_cast():
             print("Successfully converted")
             Castnow(filename=self.file, results=self.results).cast()
 
