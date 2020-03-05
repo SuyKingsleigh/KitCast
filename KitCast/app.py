@@ -1,13 +1,9 @@
 #!/usr/bin/python3
 import argparse
 import os
-import pathlib
-import shlex
 import sys
 
 from castnow import Castnow
-
-from NameParser import NameParser
 
 
 class Kitcast:
@@ -31,17 +27,13 @@ class Kitcast:
         self.results = parser.parse_args()
         self.file = self.results.filename
 
-    def _convert_to_cast(self):
-        self.file = shlex.join(self.file)
-
-        if len(self.file) > 1: print("The name should not contain spaces nor special characters")
-
+    def _convert_to_cast(self, file):
         try:
-            if not self.file:
+            if not file:
                 print("no filename specified, use -f video_name.extension")
                 return False
             else:
-                os.system("~/.KitCast/KitCast/./chromecastize.sh " + self.file)
+                os.system("~/.KitCast/KitCast/./chromecastize.sh " + file)
                 return True
         except Exception as e:
             print(e.with_traceback())
@@ -49,9 +41,11 @@ class Kitcast:
 
     def run(self):
         print("Converting file to chromecast format like ")
-        if self._convert_to_cast():
-            print("Successfully converted")
-            Castnow(filename=self.file, results=self.results).cast()
+        for file in self.file:
+            print("casting ", file)
+            if self._convert_to_cast(file):
+                print("Successfully converted")
+                Castnow(filename=file, results=self.results).cast()
 
 
 if __name__ == '__main__':
