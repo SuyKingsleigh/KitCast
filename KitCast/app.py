@@ -43,7 +43,7 @@ class Kitcast:
                 print("no filename specified, use -f video_name.extension")
                 return -1
             else:
-                os.system("./chromecastize.sh " + self.file)
+                os.system("~/.KitCast/KitCast/./chromecastize.sh " + self.file)
                 return 1
         except Exception as e:
             print(e.with_traceback())
